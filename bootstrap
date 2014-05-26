@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ -z DOCKER_HOST ]; then
+  export DOCKER_HOST=tcp://127.0.0.1:4243
+fi
+if [ -z VAGRANT_DEFAULT_PROVIDER ]; then
+  export VAGRANT_DEFAULT_PROVIDER=docker
+fi
+
+if [ ! -f insecure_key ]; then
+  curl -o insecure_key -fSL https://github.com/phusion/baseimage-docker/raw/master/image/insecure_key
+  chmod 600 insecure_key
+fi
+
+bundle install --path vendor/bundle --binstubs .bundle/bin
+
+if [ ! -d mpi_client/chef-repo/cookbooks ]; then
+  cd mpi_client/chef-repo
+  bundle exec berks vendor cookbooks
+  cd ../..
+fi
