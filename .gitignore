@@ -1,0 +1,11 @@
+.bundle
+.vagrant
+
+insecure_key
+
+Gemfile.lock
+Berksfile.lock
+
+cookbooks
+
+vendor/bundle
