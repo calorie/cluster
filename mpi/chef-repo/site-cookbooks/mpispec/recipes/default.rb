@@ -13,7 +13,7 @@ repo   = File.join(node['mpispec']['dir'], 'mpispec')
 prefix = node['mpispec']['prefix']
 
 git repo do
-  repogitory node['mpispec']['url']
+  repository node['mpispec']['url']
   revision   node['mpispec']['revision']
   action     :sync
 end
