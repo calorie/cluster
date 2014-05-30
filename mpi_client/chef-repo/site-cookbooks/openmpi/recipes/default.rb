@@ -22,9 +22,7 @@ source = File.join(dir, "openmpi-#{version}")
   g++
   gfortran
   build-essential
-}.each do |pkg|
-  package pkg
-end
+}.each { |pkg| package pkg }
 
 remote_file File.join(dir, tar) do
   source url
