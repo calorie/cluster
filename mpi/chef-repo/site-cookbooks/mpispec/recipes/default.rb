@@ -12,6 +12,13 @@ include_recipe 'git'
 repo   = File.join(node['mpispec']['dir'], 'mpispec')
 prefix = node['mpispec']['prefix']
 
+%w{
+  libtool
+  automake
+  autoconf
+  binutils-gold
+}.each { |pkg| package pkg }
+
 git repo do
   repository node['mpispec']['url']
   revision   node['mpispec']['revision']
@@ -21,6 +28,10 @@ end
 bash 'install mpispec' do
   cwd repo
   code <<-EOH
+    aclocal -I config
+    libtoolize --force --copy
+    automake --add-missing --foreign --copy
+    autoconf
     ./configure --prefix=#{prefix}
     make
     make install
