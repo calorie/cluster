@@ -5,10 +5,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  if Vagrant.has_plugin?('vagrant-omnibus')
-    config.omnibus.chef_version = :latest
-  end
-
   config.vm.define 'mpi' do |v|
     v.vm.provider 'docker' do |d|
       d.name = 'mpi'
