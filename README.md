@@ -2,6 +2,6 @@ cluster
 =======
 
 ```
-$ ./bootstrap
+$ . ./bootstrap
 $ vagrant up mpi_client --provider=docker
 ```
