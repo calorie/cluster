@@ -3,5 +3,7 @@ description 'mpi client'
 run_list(
   'recipe[apt]',
   'recipe[git]',
-  'recipe[openmpi]'
+  'recipe[gitconfig]',
+  'recipe[openmpi]',
+  'recipe[mpispec]'
 )
