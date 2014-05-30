@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ -z DOCKER_HOST ]; then
+if [ -z $DOCKER_HOST ]; then
   export DOCKER_HOST=tcp://127.0.0.1:4243
 fi
-if [ -z VAGRANT_DEFAULT_PROVIDER ]; then
+if [ -z $VAGRANT_DEFAULT_PROVIDER ]; then
   export VAGRANT_DEFAULT_PROVIDER=docker
 fi
 
