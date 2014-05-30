@@ -19,3 +19,9 @@ if [ ! -d mpi_client/chef-repo/cookbooks ]; then
   bundle exec berks vendor cookbooks
   cd ../..
 fi
+
+if [ ! -d mpi/chef-repo/cookbooks ]; then
+  cd mpi/chef-repo
+  bundle exec berks vendor cookbooks
+  cd ../..
+fi
