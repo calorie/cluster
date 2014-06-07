@@ -29,5 +29,10 @@ end
 }.each do |script|
   template File.join(user_home, script) do
     mode 755
+    variables(
+      user_home: user_home,
+      server_ip: node['nfs']['server_ip'],
+      mount_dir: node['nfs']['mount_dir']
+    )
   end
 end

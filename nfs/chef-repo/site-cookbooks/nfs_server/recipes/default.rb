@@ -9,11 +9,11 @@
 
 include_recipe 'nfs::server'
 
-nfs_dir = node['nfs_server']['dir']
+mount_dir = node['nfs']['mount_dir']
 
-directory nfs_dir
+directory mount_dir
 
-nfs_export nfs_dir do
+nfs_export mount_dir do
   network   '*'
   writeable true
   sync      true

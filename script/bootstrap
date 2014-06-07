@@ -18,14 +18,14 @@ if [ ! -d .bundle ]; then
   bundle install --path vendor/bundle --binstubs .bundle/bin
 fi
 
-if [ ! -d mpi_client/chef-repo/cookbooks ]; then
-  cd mpi_client/chef-repo
+if [ ! -d mpi/chef-repo/cookbooks ]; then
+  cd mpi/chef-repo
   bundle exec berks vendor cookbooks
   cd ../..
 fi
 
-if [ ! -d mpi/chef-repo/cookbooks ]; then
-  cd mpi/chef-repo
+if [ ! -d nfs/chef-repo/cookbooks ]; then
+  cd nfs/chef-repo
   bundle exec berks vendor cookbooks
   cd ../..
 fi

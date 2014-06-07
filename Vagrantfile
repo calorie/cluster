@@ -1,60 +1,45 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# system '. ./script/bootstrap'
-
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'nfs' do |v|
-    v.vm.box = 'ubuntu'
-    v.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box'
+    v.vm.box          = 'ubuntu'
+    v.vm.box_url      = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box'
     v.vm.boot_timeout = 600
     v.vm.network :private_network, ip: '192.168.33.10'
     v.vm.provider 'virtualbox' do |vb|
-      vb.name = 'nfs'
+      vb.name   = 'nfs'
       vb.memory = 1024
     end
     v.vm.provision :chef_solo do |chef|
-      repo = File.join('nfs', 'chef-repo')
+      repo                = File.join('nfs', 'chef-repo')
       chef.cookbooks_path = [File.join(repo, 'cookbooks'), File.join(repo, 'site-cookbooks')]
       chef.roles_path     = File.join(repo, 'roles')
       chef.data_bags_path = File.join(repo, 'data_bags')
+      chef.json           = JSON.parse(Pathname(__FILE__).dirname.join(repo, 'nodes', 'nfs.json').read)
       chef.add_role 'nfs'
-      chef.json = JSON.parse(Pathname(__FILE__).dirname.join(repo, 'nodes', 'nfs.json').read)
     end
   end
 
   config.vm.define 'mpi' do |v|
     v.vm.provider 'docker' do |d|
-      d.name = 'mpi'
-      d.build_dir = 'mpi'
+      d.name        = 'mpi'
+      d.build_dir   = 'mpi'
       d.create_args = ['--privileged']
-      d.has_ssh = true
+      d.has_ssh     = true
     end
-    v.ssh.port = 22
-    v.ssh.username = 'root'
-    v.ssh.private_key_path = 'insecure_key'
-  end
-
-  config.vm.define 'mpi_client' do |v|
-    v.vm.provider 'docker' do |d|
-      d.name = 'mpi_client'
-      d.build_dir = 'mpi_client'
-      d.create_args = ['--privileged']
-      d.has_ssh = true
-      # d.link 'mpi:mpi'
-    end
-    v.ssh.port = 22
-    v.ssh.username = 'root'
+    v.ssh.port             = 22
+    v.ssh.username         = 'root'
     v.ssh.private_key_path = 'insecure_key'
   end
 
   # if Vagrant.has_plugin?('vagrant-triggers')
   #   config.trigger.after :up, stdout: true do
   #     info 'Set up network'
-  #     run  './script/setup_ssh.sh'
+  #     run  './script/setup_network.sh'
   #   end
   # end
 end

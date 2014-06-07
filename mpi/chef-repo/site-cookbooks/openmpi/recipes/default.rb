@@ -9,11 +9,11 @@
 
 version = node['openmpi']['version']
 url     = node['openmpi']['url']
-dir     = node['openmpi']['dir']
+src_dir = node['openmpi']['src_dir']
 prefix  = node['openmpi']['prefix']
 
 tar    = "openmpi-#{version}.tar.gz"
-source = File.join(dir, "openmpi-#{version}")
+source = File.join(src_dir, "openmpi-#{version}")
 
 %w{
   autotools-dev
@@ -26,14 +26,14 @@ source = File.join(dir, "openmpi-#{version}")
   package pkg
 end
 
-remote_file File.join(dir, tar) do
+remote_file File.join(src_dir, tar) do
   source url
   mode '0644'
 end
 
 execute 'untar openmpi' do
   command "tar -xzf #{tar}"
-  cwd dir
+  cwd src_dir
   creates source
 end
 

@@ -9,13 +9,14 @@
 
 include_recipe 'nfs'
 
-nfs_dir = node['nfs_client']['dir']
-nfs_server_ip = node['nfs_client']['server_ip']
+server_dir = node['nfs']['server_dir']
+mount_dir  = node['nfs']['mount_dir']
+server_ip  = node['nfs']['server_ip']
 
-directory nfs_dir
+directory mount_dir
 
-# mount nfs_dir do
-#   device  "#{nfs_server_ip}:#{nfs_dir}"
+# mount mount_dir do
+#   device  "#{server_ip}:#{server_dir}"
 #   fstype  'nfs'
 #   options 'rw,proto=tcp,port=2049'
 #   action  [:mount, :enable]

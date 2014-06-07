@@ -5,12 +5,12 @@ ENV HOME /root
 
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
-# CMD ["/sbin/my_init"]
 CMD ["/sbin/my_init", "--enable-insecure-key"]
 
 RUN apt-get -y update
 
 RUN apt-get install -y curl
+
 ENV CHEFHOME /chef-repo
 ADD chef-repo /chef-repo
 

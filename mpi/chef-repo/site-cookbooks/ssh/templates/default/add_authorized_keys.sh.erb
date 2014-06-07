@@ -1,8 +1,10 @@
 #!/bin/sh
 
-keys_dir=/data/keys
+user_home=<%= @user_home %>
+mount_dir=<%= @mount_dir %>
+keys_dir=${mount_dir}/keys
 keys=${keys_dir}/*.pub
-authorized_keys=/root/.ssh/authorized_keys
+authorized_keys=${user_home}/.ssh/authorized_keys
 
 if [ -f $authorized_keys ]; then
   rm -f $authorized_keys

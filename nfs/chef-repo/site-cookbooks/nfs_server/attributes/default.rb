@@ -1,1 +1,1 @@
-default['nfs_server']['dir'] = '/data'
+default['nfs']['mount_dir'] = '/data'

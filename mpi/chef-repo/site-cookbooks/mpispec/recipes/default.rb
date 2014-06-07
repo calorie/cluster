@@ -9,8 +9,8 @@
 
 include_recipe 'git'
 
-repo   = File.join(node['mpispec']['dir'], 'mpispec')
-prefix = node['mpispec']['prefix']
+src_dir = File.join(node['mpispec']['src_dir'], 'mpispec')
+prefix  = node['mpispec']['prefix']
 
 %w{
   libtool
@@ -19,14 +19,14 @@ prefix = node['mpispec']['prefix']
   binutils-gold
 }.each { |pkg| package pkg }
 
-git repo do
+git src_dir do
   repository node['mpispec']['url']
   revision   node['mpispec']['revision']
   action     :sync
 end
 
 bash 'install mpispec' do
-  cwd repo
+  cwd src_dir
   code <<-EOH
     aclocal -I config
     libtoolize --force --copy
