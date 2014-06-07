@@ -6,5 +6,6 @@ run_list(
   'recipe[git]',
   'recipe[gitconfig]',
   'recipe[openmpi]',
-  'recipe[mpispec]'
+  'recipe[mpispec]',
+  'recipe[nfs_client]'
 )

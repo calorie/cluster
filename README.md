@@ -1,6 +1,20 @@
 cluster
 =======
 
+[WIP]
+
+## Requirements
+
+- Vagrant
+- Docker
+- VirtualBox
+- ruby, bundler
+- curl
+- pdsh
+
+## Usage
+
 ```
-$ vagrant up mpi_client --provider=docker
+$ . ./script/bootstrap
+$ vagrant up nfs --provider=virtualbox
 ```

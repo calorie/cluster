@@ -9,5 +9,3 @@ Berksfile.lock
 cookbooks
 
 vendor/bundle
-
-keys
