@@ -23,11 +23,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_role 'nfs'
     end
   end
-
-  config.vm.define 'mpi1' do |v|
-    v.vm.hostname = 'mpi1'
+  <% _config[:node_num].times do |n| %>
+  <% name = "mpi#{n}" %>
+  config.vm.define <%= name %> do |v|
+    v.vm.hostname = <%= name %>
     v.vm.provider 'docker' do |d|
-      d.name        = 'mpi1'
+      d.name        = <%= name %>
       d.build_dir   = 'mpi'
       d.create_args = ['--privileged']
       d.has_ssh     = true
@@ -36,19 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.ssh.username         = 'root'
     v.ssh.private_key_path = 'insecure_key'
   end
-  config.vm.define 'mpi2' do |v|
-    v.vm.hostname = 'mpi2'
-    v.vm.provider 'docker' do |d|
-      d.name        = 'mpi2'
-      d.build_dir   = 'mpi'
-      d.create_args = ['--privileged']
-      d.has_ssh     = true
-    end
-    v.ssh.port             = 22
-    v.ssh.username         = 'root'
-    v.ssh.private_key_path = 'insecure_key'
-  end
-
+  <% end %>
   # if Vagrant.has_plugin?('vagrant-triggers')
   #   config.trigger.after :up, stdout: true do
   #     info 'Set up network'

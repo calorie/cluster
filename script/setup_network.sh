@@ -12,6 +12,8 @@ fi
 
 if command -v pdsh >/dev/null 2>&1 && [ -n "${ips}" ]; then
   export PDSH_SSH_ARGS='-i insecure_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-  pdsh -R ssh -l $login_user -w $ips ${container_home}/copy_key.sh
-  pdsh -R ssh -l $login_user -w $ips ${container_home}/add_authorized_keys.sh
+  vagrant ssh nfs -c 'echo vagrant | sudo -S /data/scripts/cleanup.sh'
+  pdsh -R ssh -l $login_user -w $ips ${container_home}/copy_ssh_files.sh
+  pdsh -R ssh -l $login_user -w $ips ${container_home}/setup_ssh.sh
+  vagrant ssh nfs -c 'echo vagrant | sudo -S /data/scripts/make_hostfile.sh'
 fi

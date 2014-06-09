@@ -1,0 +1,2 @@
+# ruby ./script/make_vagrantfile.rb
+:node_num: 2
