@@ -24,10 +24,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define 'mpi1' do |v|
-    v.vm.hostname = 'mpi1'
+  config.vm.define 'mpi0' do |v|
+    v.vm.hostname = 'mpi0'
     v.vm.provider 'docker' do |d|
-      d.name        = 'mpi1'
+      d.name        = 'mpi0'
       d.build_dir   = 'mpi'
       d.create_args = ['--privileged']
       d.has_ssh     = true
@@ -36,10 +36,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.ssh.username         = 'root'
     v.ssh.private_key_path = 'insecure_key'
   end
-  config.vm.define 'mpi2' do |v|
-    v.vm.hostname = 'mpi2'
+  config.vm.define 'mpi1' do |v|
+    v.vm.hostname = 'mpi1'
     v.vm.provider 'docker' do |d|
-      d.name        = 'mpi2'
+      d.name        = 'mpi1'
       d.build_dir   = 'mpi'
       d.create_args = ['--privileged']
       d.has_ssh     = true

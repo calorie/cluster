@@ -29,3 +29,7 @@ if [ ! -d nfs/chef-repo/cookbooks ]; then
   bundle exec berks vendor cookbooks
   cd ../..
 fi
+
+if [ ! -f Vagrantfile ]; then
+  ruby ./script/make_vagrantfile.rb
+fi
