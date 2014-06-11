@@ -30,6 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.vm.provider 'docker' do |d|
       d.name        = <%= name %>
       d.build_dir   = 'mpi'
+      d.build_args  = ['--tag=local/<%= name %>']
       d.create_args = ['--privileged']
       d.has_ssh     = true
     end
