@@ -17,7 +17,7 @@ cluster
 ```
 $ . ./script/bootstrap
 $ vagrant up nfs --provider=virtualbox
-$ vagrant up mpi0 mpi1
+$ vagrant up mpi0 mpi1 --provider=docker
 $ ./script/setup_network.sh
 ```
 
