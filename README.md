@@ -9,13 +9,12 @@ cluster
 - Docker
 - VirtualBox
 - ruby, bundler
-- curl
 - pdsh
 
 ## Setup
 
 ```
-$ . ./script/bootstrap
+$ bundle exec cluster init
 $ vagrant up nfs --provider=virtualbox
 $ vagrant up mpi0 mpi1 --provider=docker
 $ ./script/setup_network.sh
