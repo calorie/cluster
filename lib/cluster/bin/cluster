@@ -9,5 +9,4 @@ rescue
   require 'cluster/cli'
 end
 
-Cli.source_root(File.join(File.dirname(__FILE__), '..'))
 Cli.start

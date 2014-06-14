@@ -1,2 +1,8 @@
-# ruby ./script/make_vagrantfile.rb
-:node_num: 2
+:staging:
+  :node_num: 2
+  :login_user: root
+  :home: /root
+:production:
+  :node_num: 4
+  :login_user: root
+  :home: /root

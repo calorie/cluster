@@ -10,28 +10,30 @@ class Initializer
   end
 
   def bootstrap
-    get_insecure_key
-    get_cookbooks
-    make_vagrantfile
+    insecure_key
+    cookbooks
+    vagrantfile
   end
 
-  def get_insecure_key
-    return if File.exist?('insecure_key')
+  def insecure_key
+    insecure_key_path = 'insecure_key'
+    FileUtils.rm_rf(insecure_key_path) if @options[:force]
+    return if File.exist?(insecure_key_path)
     uri           = URI.parse('https://raw.githubusercontent.com/phusion/baseimage-docker/master/image/insecure_key')
     https         = Net::HTTP.new(uri.host, uri.port)
     https.use_ssl = true
     request       = Net::HTTP::Post.new(uri.path)
     response      = https.request(request)
-    File.write('insecure_key', response.body)
-    FileUtils.chmod(0600, 'insecure_key')
+    File.write(insecure_key_path, response.body)
+    FileUtils.chmod(0600, insecure_key_path)
   end
 
-  def get_cookbooks
+  def cookbooks
     %w(nfs mpi).each do |node|
       chef_repo = File.join("#{node}", 'chef-repo')
-      cookbooks = File.join(chef_repo, 'cookbooks')
-      FileUtils.rm_rf(cookbooks) if @options[:force]
-      unless File.exist?(cookbooks)
+      cookbooks_path = File.join(chef_repo, 'cookbooks')
+      FileUtils.rm_rf(cookbooks_path) if @options[:force]
+      unless File.exist?(cookbooks_path)
         Dir.chdir(chef_repo) do
           system('bundle exec berks vendor cookbooks')
         end
@@ -39,9 +41,9 @@ class Initializer
     end
   end
 
-  def make_vagrantfile
-    vagrantfile = 'Vagrantfile'
-    return if File.exist?(vagrantfile) && !@options[:force]
+  def vagrantfile
+    vagrantfile_path = 'Vagrantfile'
+    return if File.exist?(vagrantfile_path) && !@options[:force]
 
     template = File.join('template', 'Vagrantfile.erb')
     raise "#{template} is not found." unless File.exist?(template)
@@ -49,6 +51,6 @@ class Initializer
     _config = @config
     erb     = ERB.new(File.read(template))
 
-    File.write(vagrantfile, erb.result(binding))
+    File.write(vagrantfile_path, erb.result(binding))
   end
 end

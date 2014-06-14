@@ -14,10 +14,9 @@ cluster
 ## Setup
 
 ```
+$ bundle install --path vendor/bundle
 $ bundle exec cluster init
-$ vagrant up nfs --provider=virtualbox
-$ vagrant up mpi0 mpi1 --provider=docker
-$ ./script/setup_network.sh
+$ bundle exec cluster up
 ```
 
 ## Usage
