@@ -60,5 +60,8 @@ class Cli < Thor
     else
       @@config = YAML.load_file('config.yaml')
     end
+    docker?
+    pdsh?
+    vagrant?
   end
 end

@@ -1,5 +1,4 @@
 require 'json'
-require 'mkmf'
 
 class Upper
   def initialize(config, options = {})
@@ -23,8 +22,6 @@ class Upper
   end
 
   def network
-    validate_network
-
     ids = `docker ps -q`.split("\n").join(' ')
     return false if ids.empty?
 
@@ -38,14 +35,5 @@ class Upper
     res = system("pdsh -R ssh -l #{login_user} -w #{ips} #{home}/copy_ssh_files.sh") if res
     res = system("pdsh -R ssh -l #{login_user} -w #{ips} #{home}/setup_ssh.sh") if res
     system("vagrant ssh nfs -c 'echo vagrant | sudo -S /data/scripts/make_hostfile.sh'") if res
-  end
-
-  private
-
-  def validate_network
-    raise '"login_user" is not found in config.yaml.' unless @config[:login_user]
-    raise '"home" is not found in config.yaml.' unless @config[:home]
-    raise '`docker` command is not found.' unless find_executable 'docker'
-    raise '`pdsh` command is not found.' unless find_executable 'pdsh'
   end
 end
