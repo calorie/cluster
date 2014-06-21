@@ -7,14 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-version = node['openmpi']['version']
-url     = node['openmpi']['url']
-src_dir = node['openmpi']['src_dir']
-prefix  = node['openmpi']['prefix']
-
-tar    = "openmpi-#{version}.tar.gz"
-source = File.join(src_dir, "openmpi-#{version}")
-
 %w{
   autotools-dev
   autoconf
@@ -22,27 +14,15 @@ source = File.join(src_dir, "openmpi-#{version}")
   g++
   gfortran
   build-essential
+  flex
 }.each do |pkg|
   package pkg
 end
 
-remote_file File.join(src_dir, tar) do
-  source url
-  mode '0644'
-end
-
-execute 'untar openmpi' do
-  command "tar -xzf #{tar}"
-  cwd src_dir
-  creates source
-end
-
-bash 'install openmpi' do
-  cwd source
-  code <<-EOH
-    ./configure --prefix=#{prefix}
-    make
-    make install
-  EOH
-  creates File.join(prefix, 'bin', 'mpicc')
+ark 'openmpi' do
+  owner   node['user']
+  url     node['openmpi']['url']
+  version node['openmpi']['version']
+  timeout 36000
+  action  :install_with_make
 end
