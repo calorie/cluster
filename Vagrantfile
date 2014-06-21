@@ -8,8 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'nfs' do |v|
     v.vm.box          = 'ubuntu'
     v.vm.box_url      = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box'
-    v.vm.boot_timeout = 600
-    v.vm.network :private_network, ip: '192.168.33.10'
+    v.vm.boot_timeout = 1000
+    # v.vm.network :private_network, ip: '192.168.33.10'
     v.vm.provider 'virtualbox' do |vb|
       vb.name   = 'nfs'
       vb.memory = 1024

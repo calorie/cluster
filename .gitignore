@@ -9,3 +9,10 @@ Berksfile.lock
 cookbooks
 
 vendor/bundle
+
+*.log
+
+mpi/chef-repo/nodes/*.json
+!mpi/chef-repo/nodes/mpi.json
+nfs/chef-repo/nodes/*.json
+!nfs/chef-repo/nodes/nfs.json

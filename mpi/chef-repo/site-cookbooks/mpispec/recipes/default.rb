@@ -7,11 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'git'
-
-src_dir = File.join(node['mpispec']['src_dir'], 'mpispec')
-prefix  = node['mpispec']['prefix']
-
 %w{
   libtool
   automake
@@ -19,22 +14,11 @@ prefix  = node['mpispec']['prefix']
   binutils-gold
 }.each { |pkg| package pkg }
 
-git src_dir do
-  repository node['mpispec']['url']
-  revision   node['mpispec']['revision']
-  action     :sync
-end
-
-bash 'install mpispec' do
-  cwd src_dir
-  code <<-EOH
-    aclocal -I config
-    libtoolize --force --copy
-    automake --add-missing --foreign --copy
-    autoconf
-    ./configure --prefix=#{prefix}
-    make
-    make install
-  EOH
-  creates File.join(prefix, 'bin', 'mpispec')
+ark 'mpispec' do
+  owner     node['user']
+  url       node['mpispec']['url']
+  version   node['mpispec']['revision']
+  extension 'tar.gz'
+  timeout   36000
+  action    :install_with_make
 end

@@ -2,4 +2,6 @@ source 'https://api.berkshelf.com'
 
 cookbook 'apt'
 cookbook 'git'
+cookbook 'ark'
 cookbook 'nfs'
+cookbook 'timezone'
