@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'nfs' do |v|
     v.vm.box          = 'ubuntu'
     v.vm.box_url      = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box'
-    v.vm.boot_timeout = 600
+    v.vm.boot_timeout = 1000
     v.vm.network :private_network, ip: '192.168.33.10'
     v.vm.provider 'virtualbox' do |vb|
       vb.name   = 'nfs'
@@ -25,10 +25,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   <% _config[:node_num].times do |n| %>
   <% name = "mpi#{n}" %>
-  config.vm.define <%= name %> do |v|
-    v.vm.hostname = <%= name %>
+  config.vm.define '<%= name %>' do |v|
+    v.vm.hostname = '<%= name %>'
     v.vm.provider 'docker' do |d|
-      d.name        = <%= name %>
+      d.name        = '<%= name %>'
       d.build_dir   = 'mpi'
       d.build_args  = ['--tag=local/<%= name %>']
       d.create_args = ['--privileged']
