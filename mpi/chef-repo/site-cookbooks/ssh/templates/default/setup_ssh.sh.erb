@@ -12,10 +12,16 @@ authorized_keys=${ssh_home}/authorized_keys
 config=${ssh_home}/config
 
 if ls $keys &> /dev/null; then
-  [ -f $authorized_keys ] && rm -f $authorized_keys
-  cat /etc/insecure_key.pub > $authorized_keys
-  chmod 600 $authorized_keys
-  cat $keys >> $authorized_keys
+  if [ ! -f $authorized_keys ]; then
+    touch $authorized_keys
+    chmod 600 $authorized_keys
+  fi
+  cat $keys |
+    while read -r ktype key comment; do
+      if ! (grep -Fw "$ktype $key" $authorized_keys | grep -qsvF "^#"); then
+        echo "$ktype $key $comment" >> $authorized_keys
+      fi
+    done
 fi
 
 if ls $configs &> /dev/null; then
