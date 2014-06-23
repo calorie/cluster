@@ -1,8 +1,20 @@
 :staging:
   :node_num: 2
-  :login_user: root
-  :home: /root
+  :login_user: 'root'
+  :nfs:
+    :ip: '192.168.33.10'
 :production:
-  :node_num: 4
-  :login_user: root
-  :home: /root
+  :login_user: 'root'
+  :nfs:
+    :ip: '192.168.100.119'
+    :host: 'nfs'
+  :mpi:
+    -
+      :ip: '192.168.100.120'
+      :host: 'mpi0'
+    -
+      :ip: '192.168.100.123'
+      :host: 'mpi1'
+    -
+      :ip: '192.168.100.133'
+      :host: 'mpi2'

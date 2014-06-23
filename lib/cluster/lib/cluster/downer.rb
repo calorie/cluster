@@ -10,11 +10,20 @@ class Downer
   end
 
   def nfs
-    system('vagrant halt nfs')
+    nfs = Nfs.new(@config, @options)
+    if @options[:production]
+      nfs.halt_production
+    else
+      nfs.halt_staging
+    end
   end
 
   def mpi
-    nodes = (0...@config[:node_num]).map { |i| "mpi#{i}" }.join(' ')
-    system("vagrant destroy -f #{nodes}") unless nodes.empty?
+    mpi = Mpi.new(@config, @options)
+    if @options[:production]
+      mpi.halt_production
+    else
+      mpi.halt_staging
+    end
   end
 end

@@ -23,7 +23,6 @@ class Cli < Thor
   end
 
   desc 'up', 'Up cluster'
-  method_option :force,   type: :boolean, aliases: '-f', banner: 'Force create'
   method_option :nfs,     type: :boolean, aliases: '-n', banner: 'Up nfs VM'
   method_option :mpi,     type: :boolean, aliases: '-m', banner: 'Up mpi containers'
   method_option :network, type: :boolean, aliases: '-N', banner: 'Setup network'
@@ -40,7 +39,6 @@ class Cli < Thor
   end
 
   desc 'halt', 'Halt cluster'
-  method_option :force, type: :boolean, aliases: '-f', banner: 'Force create'
   method_option :nfs,   type: :boolean, aliases: '-n', banner: 'Halt nfs VM'
   method_option :mpi,   type: :boolean, aliases: '-m', banner: 'Halt mpi containers'
   def halt
@@ -55,13 +53,10 @@ class Cli < Thor
   end
 
   before_method(*instance_methods(false)) do
-    if !File.exist?('config.yaml')
-      raise 'config.yaml is not found.'
-    else
-      @@config = YAML.load_file('config.yaml')
-    end
     docker?
     pdsh?
     vagrant?
+    config?
+    @@config = YAML.load_file('config.yaml')
   end
 end

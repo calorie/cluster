@@ -1,5 +1,6 @@
 #!/bin/sh
 
+user=<%= @user %>
 user_home=<%= @user_home %>
 ssh_home=${user_home}/.ssh
 mount_dir=<%= @mount_dir %>
@@ -12,10 +13,17 @@ authorized_keys=${ssh_home}/authorized_keys
 config=${ssh_home}/config
 
 if ls $keys &> /dev/null; then
-  [ -f $authorized_keys ] && rm -f $authorized_keys
-  cat /etc/insecure_key.pub > $authorized_keys
-  chmod 600 $authorized_keys
-  cat $keys >> $authorized_keys
+  if [ ! -f $authorized_keys ]; then
+    touch $authorized_keys
+    chmod 600 $authorized_keys
+    chown ${user}:${user} $authorized_keys
+  fi
+  cat $keys |
+    while read -r ktype key comment; do
+      if ! (grep -Fw "$ktype $key" $authorized_keys | grep -qsvF "^#"); then
+        echo "$ktype $key $comment" >> $authorized_keys
+      fi
+    done
 fi
 
 if ls $configs &> /dev/null; then
@@ -23,4 +31,5 @@ if ls $configs &> /dev/null; then
   touch $config
   chmod 600 $config
   cat $configs >> $config
+  chown ${user}:${user} $config
 fi

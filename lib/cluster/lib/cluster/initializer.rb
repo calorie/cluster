@@ -46,7 +46,10 @@ class Initializer
     return if File.exist?(vagrantfile_path) && !@options[:force]
 
     template = File.join('template', 'Vagrantfile.erb')
-    raise "#{template} is not found." unless File.exist?(template)
+    unless File.exist?(template)
+      puts "#{template} is not found."
+      exit 1
+    end
 
     _config = @config
     erb     = ERB.new(File.read(template))
