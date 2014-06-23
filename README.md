@@ -1,7 +1,7 @@
 cluster
 =======
 
-[WIP]
+Bootstrap Cluster for MPI
 
 ## Requirements
 
@@ -23,7 +23,7 @@ $ cluster init
 ```
 $ cluster up
 $ vagrant ssh mpi0
-$ cp /usr/local/mpispec/sample /data/
+$ cp -r /usr/local/mpispec/sample /data/
 $ cd /data/sample
 $ mpispec -np 3 --allow-run-as-root --hostfile /data/hostfile
 ```
