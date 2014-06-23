@@ -1,5 +1,6 @@
 #!/bin/sh
 
+user=<%= @user %>
 user_home=<%= @user_home %>
 ssh_home=${user_home}/.ssh
 mount_dir=<%= @mount_dir %>
@@ -15,6 +16,7 @@ if ls $keys &> /dev/null; then
   if [ ! -f $authorized_keys ]; then
     touch $authorized_keys
     chmod 600 $authorized_keys
+    chown ${user}:${user} $authorized_keys
   fi
   cat $keys |
     while read -r ktype key comment; do
@@ -29,4 +31,5 @@ if ls $configs &> /dev/null; then
   touch $config
   chmod 600 $config
   cat $configs >> $config
+  chown ${user}:${user} $config
 fi

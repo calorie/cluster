@@ -8,9 +8,7 @@ class Nfs
     nfs  = @config[:nfs]
     user = @config[:login_user]
     host = nfs[:ip] || nfs[:host]
-    Dir.chdir(File.join('nfs', 'chef-repo')) do
-      system("bundle exec knife solo bootstrap #{user}@#{host}")
-    end
+    system("cd nfs/chef-repo && bundle exec knife solo bootstrap #{user}@#{host} nodes/nfs.json && cd ../..")
   end
 
   def up_staging

@@ -12,12 +12,10 @@ class Mpi
       user = @config[:login_user]
       host = node[:ip] || node[:host]
       create_json(user, host)
-      "#{user}@{host}"
+      "#{user}@#{host}"
     end
     puts 'Bootstrap nodes...'
-    Dir.chdir(File.join('mpi', 'chef-repo')) do
-      system("echo #{remotes.join(' ')} | xargs -P #{remotes.count} -n 1 bundle exec knife solo bootstrap")
-    end
+    system("cd mpi/chef-repo && (echo #{remotes.join(' ')} | xargs -P #{remotes.count} -n 1 bundle exec knife solo bootstrap) && cd ../..")
   end
 
   def up_staging
