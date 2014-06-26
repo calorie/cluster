@@ -35,7 +35,7 @@ end
     owner node['user']
     group node['user']
     variables(
-      user:      node['user']
+      user:      node['user'],
       user_home: user_home,
       server_ip: node['nfs']['server_ip'],
       mount_dir: node['nfs']['mount_dir']
