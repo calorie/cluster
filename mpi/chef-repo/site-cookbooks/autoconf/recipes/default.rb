@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: automake
+# Cookbook Name:: autoconf
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
@@ -7,12 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'autoconf'
-
-ark 'automake' do
+ark 'autoconf' do
   owner   node['user']
-  url     node['automake']['url']
-  version node['automake']['version']
+  url     node['autoconf']['url']
+  version node['autoconf']['version']
   timeout 36000
   action  :install_with_make
 end
