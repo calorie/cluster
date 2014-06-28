@@ -40,15 +40,19 @@ class Mpi
 
   def create_json(user, host)
     nodes_dir = File.join('mpi', 'chef-repo', 'nodes')
+    host_json = File.join(nodes_dir, "#{host}.json")
+    return true if File.exist?(host_json) && host != 'mpi'
+
     mpi_json = File.join(nodes_dir, 'mpi.json')
     unless File.exist?(mpi_json)
       puts "#{mpi_json} is not found."
       exit 1
     end
+
     hash = JSON.parse(File.read(mpi_json))
     hash['user'] = user
     hash['nfs']['server_ip'] = @config[:nfs][:ip]
-    File.write(File.join(nodes_dir, "#{host}.json"), hash.to_json)
+    File.write(host_json, hash.to_json)
   end
 
   def default_nfs_ip?
