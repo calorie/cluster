@@ -10,10 +10,15 @@
 package 'libmpc-dev'
 
 ark 'gcc' do
-  owner   node['user']
-  url     node['gcc']['url']
-  version node['gcc']['version']
-  autoconf_opts ['--disable-bootstrap']
-  timeout 36000
-  action  :install_with_make
+  owner         node['user']
+  url           node['gcc']['url']
+  version       node['gcc']['version']
+  autoconf_opts node['gcc']['autoconf_opts']
+  make_opts     node['gcc']['make_opts']
+  timeout       36000
+  action        :install_with_make
+
+  unless node['gcc']['environment'].empty?
+    environment node['gcc']['environment']
+  end
 end
