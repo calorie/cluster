@@ -20,9 +20,10 @@
 end
 
 ark 'openmpi' do
-  owner   node['user']
-  url     node['openmpi']['url']
-  version node['openmpi']['version']
-  timeout 36000
-  action  :install_with_make
+  owner     node['user']
+  url       node['openmpi']['url']
+  version   node['openmpi']['version']
+  make_opts node['openmpi']['make_opts']
+  timeout   36000
+  action    :install_with_make
 end

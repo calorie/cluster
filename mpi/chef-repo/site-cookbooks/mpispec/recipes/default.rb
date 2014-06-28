@@ -19,6 +19,7 @@ ark 'mpispec' do
   url       node['mpispec']['url']
   version   node['mpispec']['revision']
   extension 'tar.gz'
+  make_opts node['mpispec']['make_opts']
   timeout   36000
   action    :install_with_make
 end

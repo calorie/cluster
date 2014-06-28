@@ -8,9 +8,10 @@
 #
 
 ark 'autoconf' do
-  owner   node['user']
-  url     node['autoconf']['url']
-  version node['autoconf']['version']
-  timeout 36000
-  action  :install_with_make
+  owner     node['user']
+  url       node['autoconf']['url']
+  version   node['autoconf']['version']
+  make_opts node['autoconf']['make_opts']
+  timeout   36000
+  action    :install_with_make
 end

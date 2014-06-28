@@ -10,9 +10,10 @@
 include_recipe 'autoconf'
 
 ark 'automake' do
-  owner   node['user']
-  url     node['automake']['url']
-  version node['automake']['version']
-  timeout 36000
-  action  :install_with_make
+  owner     node['user']
+  url       node['automake']['url']
+  version   node['automake']['version']
+  make_opts node['automake']['make_opts']
+  timeout   36000
+  action    :install_with_make
 end
