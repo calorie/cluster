@@ -1,5 +1,4 @@
 FROM phusion/baseimage:latest
-NAME nfs
 
 ENV HOME /root
 
