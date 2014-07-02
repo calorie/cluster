@@ -4,7 +4,7 @@ default['openmpi']['package']['debian'] = %w(openmpi-bin libopenmpi-dev)
 default['openmpi']['version']   = '1.8.1'
 default['openmpi']['url']       = "http://www.open-mpi.org/software/ompi/v1.8/downloads/openmpi-#{node['openmpi']['version']}.tar.gz"
 default['openmpi']['prefix']    = '/usr/local'
-default['openmpi']['make_opts'] = %w{ -j2 }
+default['openmpi']['make_opts'] = []
 default['openmpi']['packages']  = %w{
   autotools-dev
   autoconf
