@@ -1,5 +1,5 @@
-default['openmpi']['package']           = false
-default['openmpi']['package']['debian'] = %w(openmpi-bin libopenmpi-dev)
+default['openmpi']['package'] = false
+default['openmpi']['debian']  = %w(openmpi-bin libopenmpi-dev)
 
 default['openmpi']['version']   = '1.8.1'
 default['openmpi']['url']       = "http://www.open-mpi.org/software/ompi/v1.8/downloads/openmpi-#{node['openmpi']['version']}.tar.gz"

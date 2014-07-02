@@ -8,7 +8,7 @@
 #
 
 if node['openmpi']['package']
-  packages = node['package'][node['platform_family']] || []
+  packages = node['openmpi'][node['platform_family']] || []
   packages.each { |pkg| package pkg }
 else
   node['openmpi']['packages'].each do |pkg|
