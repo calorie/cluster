@@ -36,15 +36,12 @@ class Deployer
   def test_passed?
     remote = deploy_node(@staging)
     path   = @deploy[:path]
-    output = `ssh -i ./insecure_key #{remote} 'cd #{path} && #{@deploy[:test_cmd]}'`
-    puts output
-    output.include?('[100%]')
-    # results_dir = './test_results'
-    # FileUtils.mkdir(results_dir) unless File.exist?(results_dir)
-    # FileUtils.rm_f(File.join(results_dir, '*'))
-    # system("scp -i ./insecure_key #{remote}:#{File.join(path, 'rank*_output.xml')} #{results_dir}")
-    # x = XmlParser.new(results_dir)
-    # x.pass_all?(x.parse)
+    system("ssh -i ./insecure_key #{remote} 'cd #{path} && #{@deploy[:test_cmd]}'")
+    results_dir = './test_results'
+    FileUtils.mkdir(results_dir) unless File.exist?(results_dir)
+    FileUtils.rm_f(File.join(results_dir, '*'))
+    system("scp -i ./insecure_key #{remote}:#{File.join(path, 'rank*_output.xml')} #{results_dir}")
+    XmlParser.parse(results_dir)
   end
 
   private

@@ -19,7 +19,7 @@
       :ip: '192.168.100.133'
       :host: 'mpi2'
 :deploy:
-  :protcol: 'scp'
-  :repository: '/home/yuu/work/mpispec/sample'
+  :protcol: 'git'
+  :repository: 'https://bitbucket.org/calorie/sample.git'
   :path: '/data/sample'
   :test_cmd: 'mpispec -np 3 --allow-run-as-root --hostfile /data/hostfile'
