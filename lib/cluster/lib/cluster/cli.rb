@@ -52,6 +52,12 @@ class Cli < Thor
     end
   end
 
+  desc 'deploy [PROJECT_PATH]', 'deploy project'
+  def deploy(project = '.')
+    d = Deployer.new(project, @@config, options)
+    d.deploy
+  end
+
   before_method(*instance_methods(false)) do
     docker?
     pdsh?
