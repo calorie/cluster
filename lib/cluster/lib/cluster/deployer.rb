@@ -96,10 +96,6 @@ EOS
     ssh_opts
   end
 
-  def pass_all?(result)
-    false
-  end
-
   def valid_project?(project)
     return true if @deploy[:protcol] == 'git'
     src  = File.join(project, 'src')
