@@ -53,6 +53,7 @@ class Cli < Thor
   end
 
   desc 'deploy [PROJECT_PATH]', 'deploy project'
+  method_option :staging, type: :boolean, aliases: '-s', banner: 'Deploy to staging'
   def deploy(project = '.')
     d = Deployer.new(project, @@config, options)
     d.deploy

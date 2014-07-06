@@ -12,7 +12,7 @@ class Deployer
   def deploy
     exit 1 unless valid_project?(@project)
     deploy_staging
-    deploy_production if test_passed?
+    deploy_production if !@options[:staging] && test_passed?
   end
 
   def deploy_staging
