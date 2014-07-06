@@ -12,7 +12,7 @@ class Deployer
   def deploy
     exit 1 unless valid_project?(@project)
     deploy_staging
-    deploy_production if !@options[:staging] && test_passed?
+    deploy_production if test_passed? && !@options[:staging]
   end
 
   def deploy_staging
@@ -37,7 +37,7 @@ class Deployer
     remote = deploy_node(@staging)
     path   = @deploy[:path]
     system("ssh -i ./insecure_key #{remote} 'cd #{path} && #{@deploy[:test_cmd]}'")
-    results_dir = './test_results'
+    results_dir = './.cluster'
     FileUtils.mkdir(results_dir) unless File.exist?(results_dir)
     FileUtils.rm_f(File.join(results_dir, '*'))
     system("scp -i ./insecure_key #{remote}:#{File.join(path, 'rank*_output.xml')} #{results_dir}")
