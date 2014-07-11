@@ -14,7 +14,8 @@ Bootstrap Cluster for MPI
 ## Setup
 
 ```
-$ bundle install
+$ bundle install --path vendor/bundle --binstubs .bundle/bin
+$ export PATH=$PATH:./.bundle/bin
 $ cluster init
 ```
 
